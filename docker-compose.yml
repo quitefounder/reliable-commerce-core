@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: commerce
+      POSTGRES_PASSWORD: commerce
+      POSTGRES_DB: commerce
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U commerce -d commerce"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - commerce_pg:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: ./api
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgres://commerce:commerce@postgres:5432/commerce?sslmode=disable
+      ADDR: :8080
+      CORS_ORIGINS: http://localhost:5173,http://127.0.0.1:5173
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ./web
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_API_URL: http://localhost:8080/graphql
+    depends_on:
+      - api
+
+volumes:
+  commerce_pg:
