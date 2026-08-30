@@ -26,13 +26,14 @@ jobs:
       DATABASE_URL: postgres://commerce:commerce@localhost:5432/commerce_test?sslmode=disable
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-python@v5
         with:
-          go-version: "1.23"
-          cache-dependency-path: api/go.sum
+          python-version: "3.12"
       - name: Test
         working-directory: api
-        run: go test ./...
+        run: |
+          pip install -e ".[dev]"
+          pytest
 
   web:
     runs-on: ubuntu-latest
