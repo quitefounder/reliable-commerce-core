@@ -1,0 +1,21 @@
+# binaries / local env
+bin/
+dist/
+tmp/
+.env
+.env.local
+*.exe
+*.test
+
+# node
+web/node_modules
+web/dist
+
+# go
+api/coverage.out
+
+# os / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
