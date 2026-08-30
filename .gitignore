@@ -1,18 +1,21 @@
-# binaries / local env
+# local env
 bin/
 dist/
 tmp/
 .env
 .env.local
-*.exe
-*.test
+
+# python
+api/.venv
+api/**/__pycache__/
+api/.pytest_cache
+api/*.egg-info
+*.egg-info
+*.pyc
 
 # node
 web/node_modules
 web/dist
-
-# go
-api/coverage.out
 
 # os / editor
 .DS_Store

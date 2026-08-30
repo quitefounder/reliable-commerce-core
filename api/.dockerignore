@@ -1,2 +1,5 @@
-*_test.go
-coverage.out
+.venv
+__pycache__
+.pytest_cache
+*.pyc
+tests
